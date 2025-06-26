@@ -13,6 +13,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import AppleShowcase from "../components/AppleShowcase";
 import CategorySlider from "../components/CategorySlider";
 import ProductShowcase from "../components/product-showcase";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const [limit, setLimit] = useState(10);
@@ -65,36 +66,60 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white mt-15">
-      <Header />
-      <section className="bg-[#211C24] text-white ">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
-          <div className="max-w-xl">
-            <p className="text-gray-400 font-bold font-inter text-sm mb-2">
-              Pro.Beyond
-            </p>
-            <h1 className="text-4xl md:text-6xl font-semiboldj font-inter leading-tight mb-4">
-              <span className="font-inter">Iphone 14 </span>{" "}
-              <span className="text-white font-bold">Pro</span>
-            </h1>
-            <p className="text-gray-400 text-lg mb-6">
-              Created to change everything for the better. For everyone.
-            </p>
-            <Link
-              to={"/shop"}
-              className="border border-white text-white px-6 py-3 rounded-md hover:bg-white hover:text-black transition"
-            >
-              Shop Now
-            </Link>
-          </div>
-          <div className="mt-10 md:mt-0">
-            <img
-              src={iphone}
-              alt="iPhone 14 Pro"
-              className="w-[280px] md:w-[360px] object-cover"
-            />
-          </div>
-        </div>
-      </section>
+<section className="relative overflow-hidden bg-[#211C24] text-white">
+  {/* BACKGROUND EFFECTS */}
+  <motion.div
+    className="absolute -top-32 -left-32 w-[400px] h-[400px] bg-purple-500 opacity-20 blur-[120px] rounded-full z-0"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 0.3 }}
+    transition={{ duration: 2 }}
+  />
+  <motion.div
+    className="absolute bottom-[-100px] right-[-100px] w-[300px] h-[300px] bg-pink-500 opacity-20 blur-[100px] rounded-full z-0"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 0.3 }}
+    transition={{ duration: 2.5 }}
+  />
+
+  {/* SETKA: TO‘G‘RI CHIZIQLAR */}
+  <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px]" />
+
+  {/* YOUR ORIGINAL CONTENT */}
+  <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between relative z-10">
+    <div className="max-w-xl">
+      <p className="text-gray-400 font-bold font-inter text-sm mb-2">
+        Pro.Beyond
+      </p>
+      <h1 className="text-4xl md:text-6xl font-semiboldj font-inter leading-tight mb-4">
+        <span className="font-inter">Iphone 14 </span>{" "}
+        <span className="text-white font-bold">Pro</span>
+      </h1>
+      <p className="text-gray-400 text-lg mb-6">
+        Created to change everything for the better. For everyone.
+      </p>
+      <Link
+        to={"/shop"}
+        className="border border-white text-white px-6 py-3 rounded-md hover:bg-white hover:text-black transition"
+      >
+        Shop Now
+      </Link>
+    </div>
+    <div className="relative mt-10 md:mt-0">
+      <motion.div
+        className="absolute -top-10 -left-10 w-72 h-72 bg-pink-500 blur-3xl rounded-full"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.3 }}
+        transition={{ duration: 1.5 }}
+      />
+      <img
+        src={iphone}
+        alt="iPhone"
+        className="relative w-[280px] md:w-[360px] object-cover z-10"
+      />
+    </div>
+  </div>
+</section>
+
 
       <AppleShowcase />
       <CategorySlider />
