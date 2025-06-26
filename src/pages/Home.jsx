@@ -8,7 +8,7 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Link, useNavigate } from "react-router-dom";
-import iphone from "../assets/iphone.png";
+import iphone from "../assets/Iphone.png";
 import { ThemeContext } from "../context/ThemeContext";
 import AppleShowcase from "../components/AppleShowcase";
 import CategorySlider from "../components/CategorySlider";
