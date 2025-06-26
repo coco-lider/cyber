@@ -1,11 +1,16 @@
-import { SlidersHorizontal, ChevronDown, X } from "lucide-react";
-import React, { useState } from "react";
+import {
+  SlidersHorizontal,
+  ChevronDown,
+  X
+} from "lucide-react";
+import React, { useState, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { api, getProductsCategory } from "../services/api";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Slider } from "@mui/material";
+import { ThemeContext } from "../context/ThemeContext";
 
 const getProducts = async () => {
   const res = await api.get("/products?limit=100");
@@ -18,9 +23,10 @@ function valuetext(value) {
 
 const ShopPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [value, setValue] = React.useState([0, 300]);
+  const [value, setValue] = useState([0, 300]);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const navigate = useNavigate();
+  const { isDarkMode } = useContext(ThemeContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -29,22 +35,17 @@ const ShopPage = () => {
   const {
     data: allProducts = [],
     isLoading,
-    isError,
+    isError
   } = useQuery({
     queryKey: ["products"],
-    queryFn: getProducts,
+    queryFn: getProducts
   });
 
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
-    queryFn: getProductsCategory,
+    queryFn: getProductsCategory
   });
 
-  console.log(categories);
-
-  // const categories = ["T-shirts", "Shorts", "Shirts", "Hoodie", "Jeans"];
-
-  // Frontend filtering
   const filteredProducts = allProducts.filter((p) => {
     const inCategory = selectedCategory
       ? p.category?.toLowerCase().includes(selectedCategory.toLowerCase())
@@ -71,7 +72,7 @@ const ShopPage = () => {
       );
     for (let i = 0; i < 5 - Math.ceil(rating); i++)
       stars.push(
-        <span key={`empty-${i}`} className="text-gray-300">
+        <span key={`empty-${i}`} className="text-gray-300 dark:text-gray-600">
           ☆
         </span>
       );
@@ -82,23 +83,23 @@ const ShopPage = () => {
     <div
       className={`${
         isMobile
-          ? "fixed inset-0 bg-white z-50 overflow-y-auto"
+          ? "fixed inset-0 bg-white dark:bg-gray-900 z-50 overflow-y-auto"
           : "sticky top-4"
       } space-y-6`}
     >
       {isMobile && (
-        <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-lg font-semibold">Filters</h2>
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-lg font-semibold dark:text-white">Filters</h2>
           <button onClick={() => setIsMobileFiltersOpen(false)}>
-            <X className="h-6 w-6" />
+            <X className="h-6 w-6 text-black dark:text-white" />
           </button>
         </div>
       )}
 
       <div className={isMobile ? "p-4 space-y-6" : "space-y-6"}>
-        <div className="border border-gray-200 rounded-lg p-4">
+        <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-white dark:bg-gray-800">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold">Categories</h3>
+            <h3 className="font-semibold dark:text-white">Categories</h3>
           </div>
           <div className="space-y-2">
             {categories.map((cat) => (
@@ -113,7 +114,7 @@ const ShopPage = () => {
                   checked={selectedCategory === cat.slug}
                   onChange={() => setSelectedCategory(cat.slug)}
                 />
-                <span className="text-sm text-gray-600 capitalize">
+                <span className="text-sm text-gray-600 dark:text-gray-300 capitalize">
                   {cat.name}
                 </span>
               </label>
@@ -121,26 +122,30 @@ const ShopPage = () => {
 
             <button
               onClick={() => setSelectedCategory("")}
-              className="text-xs text-blue-600 underline mt-2"
+              className="text-xs text-blue-600 dark:text-blue-400 underline mt-2"
             >
               Clear Category
             </button>
           </div>
         </div>
 
-        <div className="border border-gray-200 rounded-lg p-4">
+        <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-white dark:bg-gray-800">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold">Price</h3>
+            <h3 className="font-semibold dark:text-white">Price</h3>
           </div>
+          <div className="dark:text-white">
             <Slider
-              getAriaLabel={() => "Temperature range"}
+              getAriaLabel={() => "Price range"}
               value={value}
               onChange={handleChange}
               valueLabelDisplay="auto"
               getAriaValueText={valuetext}
+              sx={{
+                color: isDarkMode ? "#90caf9" : "#1976d2"
+              }}
             />
-
-          <div className="flex justify-between text-sm mt-2">
+          </div>
+          <div className="flex justify-between text-sm mt-2 text-gray-800 dark:text-gray-300">
             <span>${value[0]}</span>
             <span>${value[1]}</span>
           </div>
@@ -150,11 +155,13 @@ const ShopPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white mt-20">
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white pt-16">
       <Header />
 
       <div className="container mx-auto px-4 py-4">
-        <div className="text-sm text-gray-500"><NavLink to={'/'}>Home</NavLink> / Shop</div>
+        <div className="text-sm text-gray-500 dark:text-gray-400">
+          <NavLink to={"/"}>Home</NavLink> / Shop
+        </div>
       </div>
 
       <div className="container mx-auto px-4 pb-12">
@@ -167,7 +174,7 @@ const ShopPage = () => {
               <h1 className="text-2xl font-bold">Shop</h1>
               <button
                 onClick={() => setIsMobileFiltersOpen(true)}
-                className="lg:hidden flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-lg"
+                className="lg:hidden flex items-center space-x-2 border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg"
               >
                 <SlidersHorizontal className="h-4 w-4" />
                 <span>Filters</span>
@@ -182,7 +189,7 @@ const ShopPage = () => {
                   key={product.id}
                   className="group cursor-pointer"
                 >
-                  <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden mb-4">
+                  <div className="aspect-square bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden mb-4">
                     <img
                       src={product.thumbnail || "/placeholder.svg"}
                       alt={product.title}
@@ -195,7 +202,7 @@ const ShopPage = () => {
                     </h3>
                     <div className="flex items-center space-x-1">
                       {renderStars(product.rating)}
-                      <span className="text-sm text-gray-600 ml-2">
+                      <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
                         {product.rating}/5
                       </span>
                     </div>

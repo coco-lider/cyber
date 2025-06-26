@@ -1,15 +1,23 @@
 import { styled } from "@mui/material";
 import React from "react";
+import banner from '../assets/Banner.png';
+
 
 const Footer = () => {
   return (
+    <div className="w-full">
       <div className="w-full">
+        <img
+          onClick={() => navigate("/shop")}
+          className="w-full cursor-pointer"
+          src={banner}
+          alt=""
+        />
+      </div>
 
-      {/* Footer Section */}
       <footer className="bg-black text-white py-12">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className=" mx-auto px-4 container">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {/* Company Info */}
             <div className="md:col-span-1">
               <h3 className="text-2xl font-bold mb-4">cyber</h3>
               <p className="text-gray-400 text-sm leading-relaxed mb-6">
@@ -17,7 +25,6 @@ const Footer = () => {
                 Our boutique-studio offers more than
               </p>
 
-              {/* Social Media Icons */}
               <div className="flex space-x-4">
                 <a
                   href="#"
@@ -70,7 +77,6 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Services Column */}
             <div>
               <h4 className="text-lg font-semibold mb-6">Services</h4>
               <ul className="space-y-3">
@@ -125,7 +131,6 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Assistance Column */}
             <div>
               <h4 className="text-lg font-semibold mb-6">
                 Assistance to the buyer
@@ -182,7 +187,6 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Empty column for spacing */}
             <div></div>
           </div>
         </div>

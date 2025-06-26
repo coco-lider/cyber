@@ -1,17 +1,21 @@
 import React from 'react'
 import Header from './Header'
 import Footer from './Footer'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 
 const Layout = () => {
+  const { pathname } = useLocation()
+
+  const hideLayout = ["/login", "/register"].includes(pathname)
+
   return (
-    <>
-      <Header />
+    <div className='dark:bg-gray-900'>
+      {!hideLayout && <Header />}
       <main>
         <Outlet />
       </main>
-      <Footer />
-    </>
+      {!hideLayout && <Footer />}
+    </div>
   )
 }
 
