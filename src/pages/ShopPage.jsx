@@ -3,10 +3,8 @@ import {
   ChevronDown,
   X
 } from "lucide-react";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { api, getProductsCategory } from "../services/api";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Slider } from "@mui/material";
@@ -31,6 +29,10 @@ const ShopPage = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+    useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const {
     data: allProducts = [],
@@ -156,7 +158,6 @@ const ShopPage = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white pt-16">
-      <Header />
 
       <div className="container mx-auto px-4 py-4">
         <div className="text-sm text-gray-500 dark:text-gray-400">

@@ -1,19 +1,19 @@
 import { styled } from "@mui/material";
 import React from "react";
 import banner from '../assets/Banner.png';
+import { Link } from "react-router-dom";
 
 
 const Footer = () => {
   return (
     <div className="w-full">
-      <div className="w-full">
+      <Link to={'/shop'} className="w-full">
         <img
-          onClick={() => navigate("/shop")}
           className="w-full cursor-pointer"
           src={banner}
           alt=""
         />
-      </div>
+      </Link>
 
       <footer className="bg-black text-white py-12">
         <div className=" mx-auto px-4 container">
